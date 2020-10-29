@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class RocketMovement : MonoBehaviour
 {
+
+    Rigidbody rigidbody;
+    AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rigidbody = GetComponent<Rigidbody>();
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -16,13 +20,39 @@ public class RocketMovement : MonoBehaviour
         ProcessInput();
     }
 
-    void ProcessInput() {
-        if (Input.GetKey(KeyCode.Space)) {
-            print("Space pressed");
-        } else if (Input.GetKey(KeyCode.A)) {
-            print("Left pressed");
-        } else if (Input.GetKey(KeyCode.D)) {
-            print("Right pressed");
+    void ProcessInput()
+    {
+        HandleThrust();
+        HandleRotation();
+    }
+
+    private void HandleRotation()
+    {
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(Vector3.back);
+            // rigidbody.AddRelativeForce(Vector3.right);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(Vector3.forward);
+            // rigidbody.AddRelativeForce(Vector3.left);
+        }
+    }
+
+    private void HandleThrust()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (!audio.isPlaying)
+            {
+                audio.Play();
+            }
+            rigidbody.AddRelativeForce(Vector3.up);
+        }
+        else
+        {
+            audio.Stop();
         }
     }
 }
