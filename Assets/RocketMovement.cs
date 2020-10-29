@@ -26,20 +26,6 @@ public class RocketMovement : MonoBehaviour
         HandleRotation();
     }
 
-    private void HandleRotation()
-    {
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(Vector3.back);
-            // rigidbody.AddRelativeForce(Vector3.right);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward);
-            // rigidbody.AddRelativeForce(Vector3.left);
-        }
-    }
-
     private void HandleThrust()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -54,5 +40,23 @@ public class RocketMovement : MonoBehaviour
         {
             audio.Stop();
         }
+    }
+
+    private void HandleRotation()
+    {
+        rigidbody.freezeRotation = true;
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(Vector3.back);
+            // rigidbody.AddRelativeForce(Vector3.right);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(Vector3.forward);
+            // rigidbody.AddRelativeForce(Vector3.left);
+        }
+
+        rigidbody.freezeRotation = false;
     }
 }
